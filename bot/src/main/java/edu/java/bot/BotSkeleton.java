@@ -11,6 +11,7 @@ import lombok.Getter;
 
 public class BotSkeleton {
     //test
+    //another one test
     private final TelegramBot bot;
     @Getter private Map<String, Boolean> links;
 
