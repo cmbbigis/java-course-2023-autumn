@@ -1,6 +1,6 @@
 package edu.java.bot;
 
-import com.pengrad.telegrambot.TelegramBot;
+import edu.java.bot.body.TelegramBot;
 import edu.java.bot.configuration.ApplicationConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -17,20 +17,20 @@ public class BotApplication {
         SpringApplication.run(BotApplication.class, args);
     }
 
-    private final BotSkeleton botSkeleton;
+    private final TelegramBot telegramBot;
 
     @Autowired
     public BotApplication(ApplicationConfig config) {
-        this.botSkeleton = new BotSkeleton(new TelegramBot(config.getTelegramToken()));
+        this.telegramBot = new TelegramBot(new com.pengrad.telegrambot.TelegramBot(config.getTelegramToken()));
     }
 
     @Bean
-    public BotSkeleton botSkeleton(ApplicationConfig config) {
-        return new BotSkeleton(new TelegramBot(config.getTelegramToken()));
+    public TelegramBot botSkeleton(ApplicationConfig config) {
+        return new TelegramBot(new com.pengrad.telegrambot.TelegramBot(config.getTelegramToken()));
     }
 
     @EventListener(ContextRefreshedEvent.class)
     public void startup() {
-        botSkeleton.start();
+        telegramBot.start();
     }
 }

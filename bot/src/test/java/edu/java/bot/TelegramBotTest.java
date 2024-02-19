@@ -1,33 +1,34 @@
 package edu.java.bot;
 
-import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
+import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.request.SendMessage;
+import edu.java.bot.body.TelegramBot;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-public class BotSkeletonTest {
-    private BotSkeleton botSkeleton;
-    private TelegramBot bot;
+public class TelegramBotTest {
+    private TelegramBot telegramBot;
+    private com.pengrad.telegrambot.TelegramBot bot;
 
     @BeforeEach
     public void setup() {
-        bot = mock(TelegramBot.class);
-        botSkeleton = new BotSkeleton(bot);
+        bot = mock(com.pengrad.telegrambot.TelegramBot.class);
+        telegramBot = new TelegramBot(bot);
+        TelegramBot.getLinks().clear();
     }
 
     @Test
     public void testStart() {
-        botSkeleton.start();
+        telegramBot.start();
 
         verify(bot).setUpdatesListener(any(UpdatesListener.class));
     }
@@ -38,15 +39,16 @@ public class BotSkeletonTest {
         Message message = mock(Message.class);
         Chat chat = mock(Chat.class);
 
+
         when(update.message()).thenReturn(message);
         when(message.chat()).thenReturn(chat);
         when(chat.id()).thenReturn(123L);
         when(message.text()).thenReturn("/start");
 
-        botSkeleton.handleUpdate(update);
+        telegramBot.process(new ArrayList<>(List.of(update)));
 
         verify(bot).execute(argThat((SendMessage sendMessage) ->
-                sendMessage.getParameters().get("text").toString().equals("Привет, теперь Вы зарегистированы!")
+            sendMessage.getParameters().get("text").toString().equals("Привет! Теперь Вы зарегистированы!")
         ));
     }
 
@@ -61,11 +63,11 @@ public class BotSkeletonTest {
         when(chat.id()).thenReturn(123L);
         when(message.text()).thenReturn("/help");
 
-        botSkeleton.handleUpdate(update);
+        telegramBot.process(new ArrayList<>(List.of(update)));
 
         verify(bot).execute(argThat((SendMessage sendMessage) ->
             sendMessage.getParameters().get("text").toString().equals("""
-                    Список команд:
+                  Список команд:
                     /start -- зарегистрировать пользователя
                     /help -- вывести окно с командами
                     /track -- начать отслеживание ссылки
@@ -85,7 +87,7 @@ public class BotSkeletonTest {
         when(chat.id()).thenReturn(123L);
         when(message.text()).thenReturn("/list");
 
-        botSkeleton.handleUpdate(update);
+        telegramBot.process(new ArrayList<>(List.of(update)));
 
         verify(bot).execute(argThat((SendMessage sendMessage) ->
             sendMessage.getParameters().get("text").toString().equals("Список пуст")
@@ -94,7 +96,7 @@ public class BotSkeletonTest {
 
     @Test
     public void listCommandWithNotEmptyListHandleUpdate() {
-        botSkeleton.getLinks().put("example.com", true);
+        TelegramBot.getLinks().put("example.com", true);
 
         Update update = mock(Update.class);
         Message message = mock(Message.class);
@@ -105,7 +107,7 @@ public class BotSkeletonTest {
         when(chat.id()).thenReturn(123L);
         when(message.text()).thenReturn("/list");
 
-        botSkeleton.handleUpdate(update);
+        telegramBot.process(new ArrayList<>(List.of(update)));
 
         verify(bot).execute(argThat((SendMessage sendMessage) ->
             sendMessage.getParameters().get("text").toString().contains("example.com")
@@ -123,7 +125,7 @@ public class BotSkeletonTest {
         when(chat.id()).thenReturn(123L);
         when(message.text()).thenReturn("/track example.com");
 
-        botSkeleton.handleUpdate(update);
+        telegramBot.process(new ArrayList<>(List.of(update)));
 
         verify(bot).execute(argThat((SendMessage sendMessage) ->
             sendMessage.getParameters()
@@ -132,12 +134,12 @@ public class BotSkeletonTest {
                 .equals("Ссылка example.com теперь отслеживается")
         ));
 
-        Assertions.assertTrue(botSkeleton.getLinks().containsKey("example.com"));
+        Assertions.assertTrue(TelegramBot.getLinks().containsKey("example.com"));
     }
 
     @Test
     public void untrackCommandHandleUpdate() {
-        botSkeleton.getLinks().put("example.com", true);
+        TelegramBot.getLinks().put("example.com", true);
 
         Update update = mock(Update.class);
         Message message = mock(Message.class);
@@ -148,13 +150,13 @@ public class BotSkeletonTest {
         when(chat.id()).thenReturn(123L);
         when(message.text()).thenReturn("/untrack example.com");
 
-        botSkeleton.handleUpdate(update);
+        telegramBot.process(new ArrayList<>(List.of(update)));
 
         verify(bot).execute(argThat((SendMessage sendMessage) ->
             sendMessage.getParameters().get("text").toString().equals("Ссылка example.com больше не отслеживается")
         ));
 
-        Assertions.assertTrue(botSkeleton.getLinks().isEmpty());
+        Assertions.assertTrue(TelegramBot.getLinks().isEmpty());
     }
 
     @Test
@@ -168,7 +170,7 @@ public class BotSkeletonTest {
         when(chat.id()).thenReturn(123L);
         when(message.text()).thenReturn("/hleb");
 
-        botSkeleton.handleUpdate(update);
+        telegramBot.process(new ArrayList<>(List.of(update)));
 
         verify(bot).execute(argThat((SendMessage sendMessage) ->
             sendMessage.getParameters().get("text").toString().equals("Я не знаю такой команды :(")
