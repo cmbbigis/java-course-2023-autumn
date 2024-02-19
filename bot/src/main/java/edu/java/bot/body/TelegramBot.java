@@ -18,6 +18,7 @@ public class TelegramBot implements Bot {
     public TelegramBot(com.pengrad.telegrambot.TelegramBot bot) {
         this.bot = bot;
         this.messageProcessor = new TelegramMessageProcessor();
+
     }
 
     @Override
@@ -39,6 +40,6 @@ public class TelegramBot implements Bot {
 
     @Override
     public void close() {
-
+        bot.shutdown();
     }
 }

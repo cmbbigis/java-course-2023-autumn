@@ -25,7 +25,7 @@ public class BotApplication {
     }
 
     @Bean
-    public TelegramBot botSkeleton(ApplicationConfig config) {
+    public TelegramBot telegramBot(ApplicationConfig config) {
         return new TelegramBot(new com.pengrad.telegrambot.TelegramBot(config.getTelegramToken()));
     }
 
