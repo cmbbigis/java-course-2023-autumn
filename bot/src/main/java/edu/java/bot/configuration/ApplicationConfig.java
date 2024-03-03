@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
-@Getter @Validated
+@Validated
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
-public class ApplicationConfig {
-    @NotEmpty
+public record ApplicationConfig(
+    @Getter @NotEmpty
     @Value("${app.telegram-token}")
-    private String telegramToken;
+    String telegramToken
+) {
+
 }

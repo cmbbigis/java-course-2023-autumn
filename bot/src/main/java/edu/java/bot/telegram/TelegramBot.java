@@ -1,14 +1,15 @@
-package edu.java.bot.body;
+package edu.java.bot.telegram;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.BaseRequest;
 import com.pengrad.telegrambot.response.BaseResponse;
-import edu.java.bot.messageServices.TelegramMessageProcessor;
+import edu.java.bot.configuration.ApplicationConfig;
+import edu.java.bot.service.TelegramMessageProcessor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.Getter;
-
+import org.springframework.context.annotation.Bean;
 
 public class TelegramBot implements Bot {
     private final com.pengrad.telegrambot.TelegramBot bot;
@@ -19,6 +20,11 @@ public class TelegramBot implements Bot {
         this.bot = bot;
         this.messageProcessor = new TelegramMessageProcessor();
 
+    }
+
+    @Bean
+    public TelegramBot telegramBot(ApplicationConfig config) {
+        return new TelegramBot(new com.pengrad.telegrambot.TelegramBot(config.getTelegramToken()));
     }
 
     @Override

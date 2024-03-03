@@ -1,18 +1,18 @@
-package edu.java.bot.commands;
+package edu.java.bot.service.command;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import edu.java.bot.body.TelegramBot;
+import edu.java.bot.telegram.TelegramBot;
 
-public class Untrack implements Command {
+public class Track implements Command {
     @Override
     public String command() {
-        return "/untrack";
+        return "/track";
     }
 
     @Override
     public String description() {
-        return "Прекратить отслеживание ссылки";
+        return "Начать отслеживание ссылки";
     }
 
     @Override
@@ -22,9 +22,8 @@ public class Untrack implements Command {
             return new SendMessage(update.message().chat().id(), "В сообщении отсутствует ссылка");
         } else {
             String link = update.message().text().split(" ")[1];
-            TelegramBot.getLinks().remove(link);
-            return new SendMessage(update.message().chat().id(),
-                String.format("Ссылка %s больше не отслеживается", link));
+            TelegramBot.getLinks().put(link, true);
+            return new SendMessage(update.message().chat().id(), String.format("Ссылка %s теперь отслеживается", link));
         }
     }
 }

@@ -1,8 +1,8 @@
-package edu.java.bot.commands;
+package edu.java.bot.service.command;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import edu.java.bot.body.TelegramBot;
+import edu.java.bot.telegram.TelegramBot;
 
 public class List implements Command {
     @Override

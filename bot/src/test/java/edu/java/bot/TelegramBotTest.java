@@ -5,7 +5,8 @@ import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import edu.java.bot.body.TelegramBot;
+import edu.java.bot.service.TelegramMessageProcessor;
+import edu.java.bot.telegram.TelegramBot;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,14 +66,13 @@ public class TelegramBotTest {
 
         telegramBot.process(new ArrayList<>(List.of(update)));
 
+        var sb = new StringBuilder("Список команд:\n");
+        for (var command : TelegramMessageProcessor.COMMANDS) {
+            sb.append("\t").append(command.command()).append(" -- ").append(command.description()).append("\n");
+        }
+
         verify(bot).execute(argThat((SendMessage sendMessage) ->
-            sendMessage.getParameters().get("text").toString().equals("""
-                  Список команд:
-                    /start -- зарегистрировать пользователя
-                    /help -- вывести окно с командами
-                    /track -- начать отслеживание ссылки
-                    /untrack -- прекратить отслеживание ссылки
-                    /list -- показать список отслеживаемых ссылок""")
+            sendMessage.getParameters().get("text").toString().contentEquals(sb)
         ));
     }
 
@@ -173,7 +173,7 @@ public class TelegramBotTest {
         telegramBot.process(new ArrayList<>(List.of(update)));
 
         verify(bot).execute(argThat((SendMessage sendMessage) ->
-            sendMessage.getParameters().get("text").toString().equals("Я не знаю такой команды :(")
+            sendMessage.getParameters().get("text").toString().equals("Неизвестная команда")
         ));
     }
 }
