@@ -1,6 +1,7 @@
 package edu.java.client;
 
 import edu.java.client.response.GitHubRepoResponse;
+import edu.java.configuration.ClientConfiguration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -9,8 +10,8 @@ import reactor.core.publisher.Mono;
 public class GitHubClient {
     private final WebClient gitHubWebClient;
 
-    public GitHubClient() {
-        this.gitHubWebClient = WebClient.create("http://localhost:8089");
+    public GitHubClient(ClientConfiguration config) {
+        this.gitHubWebClient = config.gitHubWebClient();
     }
 
     public Mono<GitHubRepoResponse> fetchRepository(String user, String repo) {

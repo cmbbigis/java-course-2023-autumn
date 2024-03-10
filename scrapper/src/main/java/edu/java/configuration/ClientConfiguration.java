@@ -1,5 +1,6 @@
 package edu.java.configuration;
 
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,19 +8,19 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class ClientConfiguration {
-    @Value("${github.base.url:https://api.github.com}")
-    private String gitHubBaseUrl;
+    @NotEmpty
+    private final String gitHubBaseUrl = "https://api.github.com";
 
-    @Value("${stackoverflow.base.url:https://api.stackexchange.com/2.2}")
-    private String stackOverflowBaseUrl;
+    @NotEmpty
+    private final String stackOverflowBaseUrl = "https://api.stackexchange.com/2.2";
 
     @Bean
-    public WebClient gitHubWebClient(WebClient.Builder webClientBuilder) {
-        return webClientBuilder.baseUrl(gitHubBaseUrl).build();
+    public WebClient gitHubWebClient() {
+        return WebClient.builder().baseUrl(gitHubBaseUrl).build();
     }
 
     @Bean
-    public WebClient stackOverflowWebClient(WebClient.Builder webClientBuilder) {
-        return webClientBuilder.baseUrl(stackOverflowBaseUrl).build();
+    public WebClient stackOverflowWebClient() {
+        return WebClient.builder().baseUrl(stackOverflowBaseUrl).build();
     }
 }

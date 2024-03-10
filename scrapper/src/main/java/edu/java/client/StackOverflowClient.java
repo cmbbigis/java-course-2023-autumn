@@ -1,6 +1,7 @@
 package edu.java.client;
 
 import edu.java.client.response.StackOverflowQuestionResponse;
+import edu.java.configuration.ClientConfiguration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -9,13 +10,15 @@ import reactor.core.publisher.Mono;
 public class StackOverflowClient {
     private final WebClient stackOverflowWebClient;
 
-    public StackOverflowClient() {
-        this.stackOverflowWebClient = WebClient.create("http://localhost:8089");
+    public StackOverflowClient(ClientConfiguration config) {
+        this.stackOverflowWebClient = config.stackOverflowWebClient();
     }
 
     public Mono<StackOverflowQuestionResponse> fetchQuestion(Long questionId) {
         return stackOverflowWebClient.get()
-            .uri(uriBuilder -> uriBuilder.path("/questions/{id}").build(questionId))
+            .uri(uriBuilder -> uriBuilder.path("/questions/{questionId}")
+                .queryParam("site", "stackoverflow")
+                .build(questionId))
             .retrieve()
             .bodyToMono(StackOverflowQuestionResponse.class);
     }
