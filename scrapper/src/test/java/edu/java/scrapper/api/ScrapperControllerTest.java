@@ -1,4 +1,4 @@
-package edu.java.bot;
+package edu.java.scrapper.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,21 +6,21 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class BotControllerTest {
+public class ScrapperControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void testPostUpdate() throws Exception {
-        mockMvc.perform(post("/updates")
-                .contentType("application/json")
-                .content("{\"id\":1,\"url\":\"http://example.com\",\"description\":\"test\",\"tgChatIds\":[1,2,3]}"))
+        mockMvc.perform(get("/links")
+                .header("Tg-Chat-Id", 1)
+                .contentType("application/json"))
             .andExpect(status().isOk());
     }
 }

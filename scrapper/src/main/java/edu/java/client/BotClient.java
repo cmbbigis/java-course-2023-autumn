@@ -1,4 +1,4 @@
-package edu.java.api;
+package edu.java.client;
 
 import edu.java.api.request.AddLinkRequest;
 import edu.java.api.request.RemoveLinkRequest;

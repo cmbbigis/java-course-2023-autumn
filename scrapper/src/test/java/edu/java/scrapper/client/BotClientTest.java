@@ -1,6 +1,6 @@
-package edu.java.scrapper;
+package edu.java.scrapper.client;
 
-import edu.java.api.BotClient;
+import edu.java.client.BotClient;
 import edu.java.api.request.AddLinkRequest;
 import edu.java.api.request.RemoveLinkRequest;
 import edu.java.api.response.LinkResponse;

@@ -1,6 +1,5 @@
-package edu.java.bot;
+package edu.java.bot.service;
 
-import edu.java.bot.api.ScrapperClient;
 import edu.java.bot.api.request.LinkUpdate;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;

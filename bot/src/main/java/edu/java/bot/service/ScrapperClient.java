@@ -1,4 +1,4 @@
-package edu.java.bot.api;
+package edu.java.bot.service;
 
 import edu.java.bot.api.request.LinkUpdate;
 import org.springframework.http.HttpHeaders;
