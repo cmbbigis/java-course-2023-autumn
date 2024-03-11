@@ -1,7 +1,6 @@
 package edu.java.configuration;
 
 import jakarta.validation.constraints.NotEmpty;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
