@@ -1,5 +1,6 @@
 package edu.java.client;
 
+import edu.java.client.response.StackOverflowApiResponse;
 import edu.java.client.response.StackOverflowQuestionResponse;
 import edu.java.configuration.ClientConfiguration;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ public class StackOverflowClient {
                 .queryParam("site", "stackoverflow")
                 .build(questionId))
             .retrieve()
-            .bodyToMono(StackOverflowQuestionResponse.class);
+            .bodyToMono(StackOverflowApiResponse.class)
+            .map(response -> response.getItems().get(0));
     }
 }
