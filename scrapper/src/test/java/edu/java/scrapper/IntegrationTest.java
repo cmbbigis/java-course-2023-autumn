@@ -10,6 +10,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import java.io.File;
 
 @Testcontainers
 public abstract class IntegrationTest {
@@ -27,7 +28,13 @@ public abstract class IntegrationTest {
 
     private static void runMigrations(JdbcDatabaseContainer<?> c) {
         try {
-            String migrationsPath = "/home/cmbbigis/naumen.scala.course.2023.autumn/homeworks/java-course-2023-autumn/migrations";
+            String migrationsPath = new File(".")
+                .toPath()
+                .toAbsolutePath()
+                .getParent()
+                .getParent()
+                .resolve("migrations")
+                .toString();
             Liquibase liquibase = new Liquibase(
                 "/master.xml",
                 new FileSystemResourceAccessor(migrationsPath),

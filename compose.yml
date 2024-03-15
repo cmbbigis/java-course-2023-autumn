@@ -2,11 +2,12 @@ services:
   postgresql:
     image: postgres:16
     ports:
-      - "5432:5432"
+      - "5437:5437"
     environment:
       POSTGRES_DB: scrapper
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      PGPORT: 5437
     volumes:
       - postgresql:/var/lib/postgresql/data
     networks:
@@ -19,7 +20,7 @@ services:
     command:
       - --changelog-file=master.xml
       - --driver=org.postgresql.Driver
-      - --url=jdbc:postgresql://postgresql:5432/scrapper
+      - --url=jdbc:postgresql://postgresql:5437/scrapper
       - --username=postgres
       - --password=postgres
       - update
