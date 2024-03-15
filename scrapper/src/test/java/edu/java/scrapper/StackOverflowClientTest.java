@@ -1,29 +1,21 @@
 package edu.java.scrapper;
 
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import edu.java.client.StackOverflowClient;
-import org.junit.Rule;
+import edu.java.configuration.ClientConfiguration;
 import org.junit.Test;
 import reactor.test.StepVerifier;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 public class StackOverflowClientTest {
-
-    @Rule
-    public WireMockRule wireMockRule = new WireMockRule(8089);
-
     @Test
     public void testFetchQuestion() {
-        stubFor(get(urlEqualTo("/questions/123"))
-            .willReturn(aResponse()
-                .withHeader("Content-Type", "application/json")
-                .withBody("{\"title\":\"Question title\",\"link\":\"http://stackoverflow.com/questions/123\",\"creation_date\":\"2020-01-01T00:00:00Z\"}")));
+        StackOverflowClient stackOverflowClient = new StackOverflowClient(ClientConfiguration.stackOverflowWebClient());
 
-        StackOverflowClient stackOverflowClient = new StackOverflowClient();
-
-        StepVerifier.create(stackOverflowClient.fetchQuestion(123L))
-            .expectNextMatches(question -> question.getTitle().equals("Question title") && question.getLink().equals("http://stackoverflow.com/questions/123"))
+        StepVerifier.create(stackOverflowClient.fetchQuestion(5408156L))
+            .expectNextMatches(question ->
+                question.getTitle().equals("How to drop a PostgreSQL database if there are active connections to it?")
+                && question.getLink().equals(
+"https://stackoverflow.com/questions/5408156/how-to-drop-a-postgresql-database-if-there-are-active-connections-to-it"))
             .verifyComplete();
     }
 }

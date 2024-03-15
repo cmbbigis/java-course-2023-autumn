@@ -9,8 +9,8 @@ import reactor.core.publisher.Mono;
 public class GitHubClient {
     private final WebClient gitHubWebClient;
 
-    public GitHubClient() {
-        this.gitHubWebClient = WebClient.create("http://localhost:8089");
+    public GitHubClient(WebClient gitHubWebClient) {
+        this.gitHubWebClient = gitHubWebClient;
     }
 
     public Mono<GitHubRepoResponse> fetchRepository(String user, String repo) {
