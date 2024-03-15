@@ -3,9 +3,8 @@ package edu.java.client.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.OffsetDateTime;
 import lombok.Data;
-import lombok.Getter;
 
-@Getter @Data
+@Data
 public class GitHubRepoResponse {
     @JsonProperty("name")
     private String name;

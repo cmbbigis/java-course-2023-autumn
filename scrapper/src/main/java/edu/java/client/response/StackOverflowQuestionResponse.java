@@ -2,9 +2,8 @@ package edu.java.client.response;
 
 import java.time.OffsetDateTime;
 import lombok.Data;
-import lombok.Getter;
 
-@Getter @Data
+@Data
 public class StackOverflowQuestionResponse {
     private String title;
 

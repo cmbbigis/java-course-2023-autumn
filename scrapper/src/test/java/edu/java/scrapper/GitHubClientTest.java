@@ -9,7 +9,7 @@ import reactor.test.StepVerifier;
 public class GitHubClientTest {
     @Test
     public void testFetchRepository() {
-        GitHubClient gitHubClient = new GitHubClient(new ClientConfiguration());
+        GitHubClient gitHubClient = new GitHubClient(ClientConfiguration.gitHubWebClient());
 
         StepVerifier.create(gitHubClient.fetchRepository("cmbbigis", "git-rules"))
             .expectNextMatches(repo -> repo.getName().equals("git-rules") && repo.getFullName().equals("cmbbigis/git-rules"))

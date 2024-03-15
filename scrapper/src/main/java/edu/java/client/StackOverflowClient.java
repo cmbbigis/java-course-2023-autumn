@@ -2,7 +2,6 @@ package edu.java.client;
 
 import edu.java.client.response.StackOverflowApiResponse;
 import edu.java.client.response.StackOverflowQuestionResponse;
-import edu.java.configuration.ClientConfiguration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -11,8 +10,8 @@ import reactor.core.publisher.Mono;
 public class StackOverflowClient {
     private final WebClient stackOverflowWebClient;
 
-    public StackOverflowClient(ClientConfiguration config) {
-        this.stackOverflowWebClient = config.stackOverflowWebClient();
+    public StackOverflowClient(WebClient stackOverflowWebClient) {
+        this.stackOverflowWebClient = stackOverflowWebClient;
     }
 
     public Mono<StackOverflowQuestionResponse> fetchQuestion(Long questionId) {

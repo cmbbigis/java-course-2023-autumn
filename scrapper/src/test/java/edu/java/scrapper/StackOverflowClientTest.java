@@ -9,7 +9,7 @@ import reactor.test.StepVerifier;
 public class StackOverflowClientTest {
     @Test
     public void testFetchQuestion() {
-        StackOverflowClient stackOverflowClient = new StackOverflowClient(new ClientConfiguration());
+        StackOverflowClient stackOverflowClient = new StackOverflowClient(ClientConfiguration.stackOverflowWebClient());
 
         StepVerifier.create(stackOverflowClient.fetchQuestion(5408156L))
             .expectNextMatches(question ->
