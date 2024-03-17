@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/updates")
 public class BotController {
-
     @Operation(summary = "Отправить обновление")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Обновление обработано"),

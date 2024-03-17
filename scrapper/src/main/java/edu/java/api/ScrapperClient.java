@@ -1,13 +1,12 @@
-package edu.java.bot.api;
+package edu.java.api;
 
-import edu.java.bot.api.request.LinkUpdate;
+import edu.java.api.request.LinkUpdate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 
 public class ScrapperClient {
-
     private final WebClient webClient;
 
     public ScrapperClient(String baseUrl) {

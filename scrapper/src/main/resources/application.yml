@@ -5,6 +5,11 @@ app:
     force-check-delay: 10000
 
 spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5437/scrapper
+    username: postgres
+    password: postgres
   application:
     name: scrapper
 

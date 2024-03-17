@@ -5,13 +5,16 @@ import edu.java.api.request.RemoveLinkRequest;
 import edu.java.api.response.ApiErrorResponse;
 import edu.java.api.response.LinkResponse;
 import edu.java.api.response.ListLinksResponse;
+import edu.java.service.LinkService;
+import edu.java.service.TgChatService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +24,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
 @RestController
 public class ScrapperController {
+    @Autowired
+    private TgChatService tgChatService;
+    @Autowired
+    private LinkService linkService;
 
     @Operation(summary = "Зарегистрировать чат")
     @ApiResponses(value = {
@@ -32,6 +38,7 @@ public class ScrapperController {
     })
     @PostMapping("/tg-chat/{id}")
     public ResponseEntity<?> registerChat(@PathVariable long id) {
+        tgChatService.register(id);
         return ResponseEntity.ok().build();
     }
 
@@ -42,6 +49,7 @@ public class ScrapperController {
     })
     @DeleteMapping("/tg-chat/{id}")
     public ResponseEntity<?> deleteChat(@PathVariable long id) {
+        tgChatService.unregister(id);
         return ResponseEntity.ok().build();
     }
 
@@ -52,8 +60,15 @@ public class ScrapperController {
     })
     @GetMapping("/links")
     public ResponseEntity<ListLinksResponse> getAllLinks(@RequestHeader("Tg-Chat-Id") long chatId) {
+        var links = linkService.listAll(chatId);
         var response = new ListLinksResponse();
-        response.setLinks(new ArrayList<>(List.of(new LinkResponse())));
+        response.setLinks(links.stream().map(link -> {
+            var linkResponse = new LinkResponse();
+            linkResponse.setId(link.getId());
+            linkResponse.setUrl(URI.create(link.getUrl()));
+            return linkResponse;
+        }).collect(Collectors.toList()));
+        response.setSize(response.getLinks().size());
         return ResponseEntity.ok(response);
     }
 
@@ -65,8 +80,10 @@ public class ScrapperController {
     @PostMapping("/links")
     public ResponseEntity<LinkResponse> addLink(@RequestHeader("Tg-Chat-Id") long chatId, @RequestBody
     AddLinkRequest request) throws URISyntaxException {
+        var link = linkService.add(chatId, new URI(request.getLink()));
         var response = new LinkResponse();
-        response.setId(1);
+        response.setId(link.getId());
+        response.setUrl(URI.create(link.getUrl()));
         return ResponseEntity.ok(response);
     }
 
@@ -77,9 +94,11 @@ public class ScrapperController {
     })
     @DeleteMapping("/links")
     public ResponseEntity<LinkResponse> removeLink(@RequestHeader("Tg-Chat-Id") long chatId, @RequestBody
-    RemoveLinkRequest request) {
+    RemoveLinkRequest request) throws URISyntaxException {
+        var link = linkService.remove(chatId, new URI(request.getLink()));
         var response = new LinkResponse();
-        response.setId(1);
+        response.setId(link.getId());
+        response.setUrl(URI.create(link.getUrl()));
         return ResponseEntity.ok(response);
     }
 }

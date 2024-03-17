@@ -1,9 +1,9 @@
-package edu.java.api;
+package edu.java.bot.api;
 
-import edu.java.api.request.AddLinkRequest;
-import edu.java.api.request.RemoveLinkRequest;
-import edu.java.api.response.LinkResponse;
-import edu.java.api.response.ListLinksResponse;
+import edu.java.bot.api.request.AddLinkRequest;
+import edu.java.bot.api.request.RemoveLinkRequest;
+import edu.java.bot.api.response.LinkResponse;
+import edu.java.bot.api.response.ListLinksResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.reactive.function.BodyInserters;
