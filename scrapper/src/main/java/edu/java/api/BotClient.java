@@ -6,10 +6,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 
-public class ScrapperClient {
+public class BotClient {
     private final WebClient webClient;
 
-    public ScrapperClient(String baseUrl) {
+    public BotClient(String baseUrl) {
         this.webClient = WebClient.builder()
             .baseUrl(baseUrl)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json")

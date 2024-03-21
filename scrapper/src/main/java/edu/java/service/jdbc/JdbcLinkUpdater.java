@@ -1,6 +1,6 @@
 package edu.java.service.jdbc;
 
-import edu.java.api.ScrapperClient;
+import edu.java.api.BotClient;
 import edu.java.api.request.LinkUpdate;
 import edu.java.client.GitHubClient;
 import edu.java.client.StackOverflowClient;
@@ -26,7 +26,7 @@ public class JdbcLinkUpdater implements LinkUpdater {
     private GitHubClient gitHubClient;
     @Autowired
     private StackOverflowClient stackOverflowClient;
-    private final ScrapperClient botClient = new ScrapperClient("http://localhost:8090");
+    private final BotClient botClient = new BotClient("http://localhost:8090");
 
     private final int twentyFour = 24;
     private final int five = 5;

@@ -11,14 +11,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 
-public class BotClient {
+public class ScrapperClient {
 
     private final WebClient webClient;
     private final String tgChat = "/tg-chat/";
     private final String tgChatId = "Tg-Chat-Id";
     private final String links = "/links";
 
-    public BotClient(String baseUrl) {
+    public ScrapperClient(String baseUrl) {
         this.webClient = WebClient.builder()
             .baseUrl(baseUrl)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json")
