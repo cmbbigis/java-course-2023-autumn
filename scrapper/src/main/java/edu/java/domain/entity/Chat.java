@@ -1,12 +1,17 @@
 package edu.java.domain.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 import lombok.Data;
-
+import lombok.Getter;
 
 @Data
+@Entity
 public class Chat {
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) @Getter @Id private Long id;
     private String name;
     private LocalDateTime createdAt;
     private String createdBy;
@@ -14,7 +19,7 @@ public class Chat {
     public Chat() {
         id = 0L;
         name = "";
-        createdAt = LocalDateTime.MIN;
+        createdAt = LocalDateTime.now();
         createdBy = "";
     }
 
@@ -23,5 +28,9 @@ public class Chat {
         this.name = name;
         this.createdAt = createdAt;
         this.createdBy = createdBy;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

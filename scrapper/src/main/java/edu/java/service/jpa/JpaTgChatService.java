@@ -1,26 +1,25 @@
-package edu.java.service.jdbc;
+package edu.java.service.jpa;
 
 import edu.java.domain.entity.Chat;
-import edu.java.domain.jdbc.ChatDao;
+import edu.java.domain.jpa.ChatRepository;
 import edu.java.service.TgChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JdbcTgChatService implements TgChatService {
+public class JpaTgChatService implements TgChatService {
     @Autowired
-    private ChatDao chatDao;
+    private ChatRepository chatRepository;
 
     @Override
     public void register(long tgChatId) {
         Chat chat = new Chat();
         chat.setId(tgChatId);
-        chat.setName(String.valueOf(chat.getId()));
-        chatDao.add(chat);
+        chatRepository.save(chat);
     }
 
     @Override
     public void unregister(long tgChatId) {
-        chatDao.remove(tgChatId);
+        chatRepository.deleteById(tgChatId);
     }
 }

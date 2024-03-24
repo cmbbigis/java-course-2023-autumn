@@ -1,4 +1,4 @@
-package edu.java.domain;
+package edu.java.domain.jdbc;
 
 import edu.java.domain.entity.Link;
 import java.sql.Timestamp;

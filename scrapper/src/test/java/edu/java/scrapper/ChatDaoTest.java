@@ -1,6 +1,6 @@
 package edu.java.scrapper;
 
-import edu.java.domain.ChatDao;
+import edu.java.domain.jdbc.ChatDao;
 import edu.java.domain.entity.Chat;
 import java.time.LocalDateTime;
 import java.util.List;

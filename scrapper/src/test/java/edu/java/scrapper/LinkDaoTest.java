@@ -1,6 +1,6 @@
 package edu.java.scrapper;
 
-import edu.java.domain.LinkDao;
+import edu.java.domain.jdbc.LinkDao;
 import edu.java.domain.entity.Link;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

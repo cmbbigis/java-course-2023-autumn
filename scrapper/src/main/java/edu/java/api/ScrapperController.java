@@ -15,6 +15,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ScrapperController {
-    @Autowired
+    @Qualifier("jpaTgChatService") @Autowired
     private TgChatService tgChatService;
-    @Autowired
+    @Qualifier("jpaLinkService") @Autowired
     private LinkService linkService;
 
     @Operation(summary = "Зарегистрировать чат")

@@ -6,8 +6,8 @@ import edu.java.client.GitHubClient;
 import edu.java.client.StackOverflowClient;
 import edu.java.client.response.GitHubRepoResponse;
 import edu.java.client.response.StackOverflowQuestionResponse;
-import edu.java.domain.LinkDao;
 import edu.java.domain.entity.Link;
+import edu.java.domain.jdbc.LinkDao;
 import edu.java.service.LinkUpdater;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -26,7 +26,8 @@ public class JdbcLinkUpdater implements LinkUpdater {
     private GitHubClient gitHubClient;
     @Autowired
     private StackOverflowClient stackOverflowClient;
-    private final BotClient botClient = new BotClient("http://localhost:8090");
+    @Autowired
+    private BotClient botClient;
 
     private final int twentyFour = 24;
     private final int five = 5;

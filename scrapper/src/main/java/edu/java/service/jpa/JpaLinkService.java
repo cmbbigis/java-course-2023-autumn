@@ -1,7 +1,7 @@
-package edu.java.service.jdbc;
+package edu.java.service.jpa;
 
 import edu.java.domain.entity.Link;
-import edu.java.domain.jdbc.LinkDao;
+import edu.java.domain.jpa.LinkRepository;
 import edu.java.service.LinkService;
 import java.net.URI;
 import java.util.Collection;
@@ -9,29 +9,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JdbcLinkService implements LinkService {
+public class JpaLinkService implements LinkService {
     @Autowired
-    private LinkDao linkDao;
+    private LinkRepository linkRepository;
 
     @Override
     public Link add(long tgChatId, URI url) {
         Link link = new Link();
         link.setUrl(url.toString());
-        linkDao.add(link);
-        return link;
+        return linkRepository.save(link);
     }
 
     @Override
     public Link remove(long tgChatId, URI url) {
-        Link link = linkDao.findAll().stream().filter(l -> l.getUrl().equals(url.toString())).findFirst().orElse(null);
+        Link link = linkRepository.findById(tgChatId).orElse(null);
         if (link != null) {
-            linkDao.remove(link.getId());
+            linkRepository.delete(link);
         }
         return link;
     }
 
     @Override
     public Collection<Link> listAll(long tgChatId) {
-        return linkDao.findAll();
+        return linkRepository.findAll();
     }
 }
