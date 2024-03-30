@@ -1,7 +1,7 @@
 package edu.java.service.jdbc;
 
-import edu.java.api.BotClient;
 import edu.java.api.request.LinkUpdate;
+import edu.java.client.BotClient;
 import edu.java.client.GitHubClient;
 import edu.java.client.StackOverflowClient;
 import edu.java.client.response.GitHubRepoResponse;
