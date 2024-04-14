@@ -13,6 +13,28 @@ spring:
   application:
     name: scrapper
 
+management:
+  server:
+    port: 8081
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  endpoints:
+    web:
+      base-path: ''
+      exposure:
+        include: '*'
+      path-mapping:
+        prometheus: 'metrics'
+    enabled-by-default: false
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
+    prometheus:
+      enabled: true
+
 server:
   port: 8080
 
@@ -22,3 +44,4 @@ logging:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
