@@ -2,6 +2,7 @@ package edu.java.scrapper;
 
 import edu.java.domain.jdbc.LinkDao;
 import edu.java.domain.entity.Link;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +28,7 @@ public class LinkDaoTest extends IntegrationTest {
             "cmbbigis");
         linkDao.add(link);
         List<Link> entities = linkDao.findAll();
-        assertTrue(entities.contains(link));
+        Assertions.assertTrue(entities.contains(link));
     }
 
     @Test
@@ -41,6 +42,6 @@ public class LinkDaoTest extends IntegrationTest {
         linkDao.add(link);
         linkDao.remove(1L);
         List<Link> entities = linkDao.findAll();
-        assertFalse(entities.contains(link));
+        Assertions.assertFalse(entities.contains(link));
     }
 }

@@ -3,6 +3,7 @@ package edu.java.scrapper;
 import edu.java.service.LinkService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -23,11 +24,12 @@ public class ScrapperControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private LinkService linkService;
+    @Qualifier("jpaLinkService")
+    private LinkService jpaLinkService;
 
     @Test
     public void testPostUpdate() throws Exception {
-        when(linkService.listAll(1L)).thenReturn(Collections.emptyList());
+        when(jpaLinkService.listAll(1L)).thenReturn(Collections.emptyList());
 
         mockMvc.perform(get("/links")
                 .header("Tg-Chat-Id", 1)
