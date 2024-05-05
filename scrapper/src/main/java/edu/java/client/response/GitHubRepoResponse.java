@@ -15,4 +15,7 @@ public class GitHubRepoResponse {
 
     @Getter  @JsonProperty("created_at")
     private OffsetDateTime createdAt;
+
+    @Getter  @JsonProperty("updated_at")
+    private OffsetDateTime updatedAt;
 }
