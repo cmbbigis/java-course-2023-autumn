@@ -20,8 +20,8 @@ public class LinkDao {
     private final String createdByString = "created_by";
 
     public void add(Link link) {
-        String sql = "INSERT INTO Link (url, created_at, created_by) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, link.getUrl(), link.getCreatedAt(), link.getCreatedBy());
+        String sql = "INSERT INTO Link (url, created_at, last_checked_at, created_by) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, link.getUrl(), link.getCreatedAt(), link.getLastCheckedAt(), link.getCreatedBy());
     }
 
     public void remove(Long id) {
