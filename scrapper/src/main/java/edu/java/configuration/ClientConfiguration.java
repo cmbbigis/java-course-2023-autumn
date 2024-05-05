@@ -1,5 +1,6 @@
 package edu.java.configuration;
 
+import edu.java.api.BotClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,14 @@ public class ClientConfiguration {
 
     @Value("${stackoverflow.base.url:https://api.stackexchange.com/2.2}")
     private String stackOverflowBaseUrl;
+
+    @Value("${bot.base.url:http://localhost:8090}")
+    private String botBaseUrl;
+
+    @Bean
+    public BotClient botClient() {
+        return new BotClient(botBaseUrl);
+    }
 
     @Bean
     public WebClient gitHubWebClient(WebClient.Builder webClientBuilder) {
