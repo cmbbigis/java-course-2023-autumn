@@ -4,6 +4,7 @@ app:
     interval: 10000
     force-check-delay: 10000
 
+
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -12,6 +13,9 @@ spring:
     password: postgres
   application:
     name: scrapper
+
+  kafka:
+    bootstrap-servers: localhost:9092
 
 server:
   port: 8080

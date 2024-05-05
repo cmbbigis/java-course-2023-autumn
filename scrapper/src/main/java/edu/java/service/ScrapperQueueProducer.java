@@ -10,7 +10,7 @@ public class ScrapperQueueProducer {
 
     private final KafkaTemplate<String, LinkUpdate> kafkaTemplate;
 
-    @Value("${app.kafka.topic-name}")
+    @Value("link-update")
     private String topicName;
 
     public ScrapperQueueProducer(KafkaTemplate<String, LinkUpdate> kafkaTemplate) {

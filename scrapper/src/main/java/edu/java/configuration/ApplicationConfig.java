@@ -13,10 +13,7 @@ public record ApplicationConfig(
     @NotNull
     Scheduler scheduler,
 
-    AccessType databaseAccessType,
-
-    @NotNull
-    Boolean useQueue
+    AccessType databaseAccessType
 ) {
     @Bean
     public LinkUpdaterScheduler linkUpdaterScheduler() {
