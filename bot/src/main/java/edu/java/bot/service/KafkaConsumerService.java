@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaConsumerService {
 
-    private final NotificationService notificationService;
+    private final UpdateHandler notificationService;
 
-    public KafkaConsumerService(NotificationService notificationService) {
+    public KafkaConsumerService(UpdateHandler notificationService) {
         this.notificationService = notificationService;
     }
 
@@ -20,8 +20,8 @@ public class KafkaConsumerService {
                     concurrency = "1",
                     autoCreateTopics = "false",
                     dltTopicSuffix = "-dlq")
-    @KafkaListener(topics = "${app.scrapper-topic.name}", groupId = "${app.kafka.group-id}")
+    @KafkaListener(topics = "link-update", groupId = "group1")
     public void listen(LinkUpdate update) {
-        notificationService.handleNotification(update);
+        notificationService.handleUpdate(update);
     }
 }
