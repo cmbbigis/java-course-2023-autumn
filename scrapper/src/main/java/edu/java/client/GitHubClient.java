@@ -1,5 +1,6 @@
 package edu.java.client;
 
+import edu.java.client.policy.RetryPolicy;
 import edu.java.client.response.GitHubRepoResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -8,6 +9,8 @@ import reactor.core.publisher.Mono;
 @Component
 public class GitHubClient {
     private final WebClient gitHubWebClient;
+    private final int three = 3;
+    private final int thousand = 1000;
 
     public GitHubClient() {
         this.gitHubWebClient = WebClient.create("http://localhost:8089");
@@ -17,6 +20,7 @@ public class GitHubClient {
         return gitHubWebClient.get()
             .uri(uriBuilder -> uriBuilder.path("/repos/{user}/{repo}").build(user, repo))
             .retrieve()
-            .bodyToMono(GitHubRepoResponse.class);
+            .bodyToMono(GitHubRepoResponse.class)
+            .retryWhen(RetryPolicy.getPolicy("constant", three, thousand));
     }
 }

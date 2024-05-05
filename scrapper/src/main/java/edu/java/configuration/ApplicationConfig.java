@@ -11,9 +11,10 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
 public record ApplicationConfig(
     @NotNull
-    Scheduler scheduler
-) {
+    Scheduler scheduler,
 
+    AccessType databaseAccessType
+) {
     @Bean
     public LinkUpdaterScheduler linkUpdaterScheduler() {
         return new LinkUpdaterScheduler();
