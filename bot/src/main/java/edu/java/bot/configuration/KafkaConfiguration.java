@@ -1,7 +1,7 @@
 package edu.java.bot.configuration;
 
 import edu.java.bot.service.KafkaConsumerService;
-import edu.java.bot.service.NotificationService;
+import edu.java.bot.service.UpdateHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +23,7 @@ public class KafkaConfiguration implements KafkaListenerConfigurer {
     }
 
     @Bean
-    public KafkaConsumerService scrapperListener(NotificationService updateHandler) {
+    public KafkaConsumerService scrapperListener(UpdateHandler updateHandler) {
         return new KafkaConsumerService(updateHandler);
     }
 }

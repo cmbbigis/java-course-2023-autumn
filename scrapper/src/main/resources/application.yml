@@ -12,6 +12,8 @@ spring:
     password: postgres
   application:
     name: scrapper
+  kafka:
+    bootstrap-servers: localhost:9092
 
 management:
   server:
@@ -44,4 +46,3 @@ logging:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
-
