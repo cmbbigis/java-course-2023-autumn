@@ -21,6 +21,4 @@ public class JpaTgChatServiceTest extends IntegrationTest {
         chatService.register(chatId);
         assertNotNull(chatRepository.findById(chatId).orElse(null));
     }
-
-    // Добавьте здесь другие тесты для JpaTgChatService
 }
