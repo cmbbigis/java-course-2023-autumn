@@ -7,8 +7,34 @@ spring:
   jackson:
     time-zone: UTC
 
+management:
+  server:
+    port: 8091
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  endpoints:
+    web:
+      base-path: ''
+      exposure:
+        include: '*'
+      path-mapping:
+        prometheus: 'metrics'
+    enabled-by-default: false
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
+    prometheus:
+      enabled: true
+
 server:
   port: 8090
 
 logging:
   config: classpath:log4j2-plain.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
