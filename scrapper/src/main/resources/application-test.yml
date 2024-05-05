@@ -5,13 +5,15 @@ app:
     force-check-delay: 10000
 
 spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5437/scrapper
-    username: postgres
-    password: postgres
   application:
     name: scrapper
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
 
 server:
   port: 8080
