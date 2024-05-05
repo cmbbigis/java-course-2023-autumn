@@ -1,0 +1,26 @@
+app:
+  scheduler:
+    enable: true
+    interval: 10000
+    force-check-delay: 10000
+
+spring:
+  application:
+    name: scrapper
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+
+server:
+  port: 8080
+
+logging:
+  config: classpath:log4j2-plain.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
